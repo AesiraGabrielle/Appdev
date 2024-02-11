@@ -18,6 +18,7 @@ class AuthController extends Controller
             return $this->respondWithToken($token);
         }
 
+
         return response()->json(['error' => 'Unauthorized'], 401);
     }
     public function registration(Request $request)
