@@ -1,0 +1,315 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Jockey+One&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+
+.form-container {
+    width: 25%;
+}
+
+.c-bg{
+    background-color: #1e1e1e;
+}
+
+.h-bg{
+    background-color: #0e0e0e;
+    position: absolute;
+}
+
+.header-link{
+    text-decoration: none;
+    font-family: "Jockey One", sans-serif;
+    font-weight: 700;
+}
+
+.t-font{
+    font-family: "Montserrat", sans-serif;
+    font-weight: 700;
+}
+
+.i-bg{
+    background-color: #686868;
+    border-color: transparent;
+    font-family: "Montserrat", sans-serif;
+    color: #AEAEAE;
+}
+
+.i-bg::placeholder{
+    color: #AEAEAE;
+}
+.link-color{
+    color: #C70000;
+    text-decoration: none;
+}
+
+.link-color:hover{
+    color: #F70000;
+}
+
+
+.btn-color{
+    background-color: #C70000;
+    color: white;
+    font-family: "Montserrat", sans-serif;
+    font-weight: 700;
+    border-color: transparent;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.btn-color:hover {
+    background-color: #F70000; /* Change hover background color */
+    border-color: transparent; /* Remove border color on hover */
+}
+
+
+@media screen and (max-width: 1500px) {
+    .form-container {
+        width: 50%;
+    }
+    .h-bg{
+        position: static;
+    }
+}
+
+@media screen and (max-width: 500px) {
+    .form-container {
+        width: 80%;
+    }
+    .h-bg{
+        position: static;
+    }
+}
+
+
+
+/* Hide the default checkbox */
+.checkbox-container input[type="checkbox"] {
+    display: none;
+  }
+  
+  /* Style the custom checkbox */
+  .checkbox-container label {
+    position: relative;
+    display: inline-flex;
+    width: 20px;
+    height: 20px;
+    background-color: transparent;
+  }
+  
+  /* Style the custom checkbox when unchecked */
+  .checkbox-container label::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 20px;
+    height: 20px;
+    border: 1px solid red; /* Set the border color to red */
+  }
+  
+  /* Style the custom checkbox when checked */
+  .checkbox-container input[type="checkbox"]:checked + label::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 10px;
+    height: 10px;
+    background-color: red; /* Set the check color to red */
+  }
+  
+
+  .instructions {
+    font-size: 0.75rem;
+    border-radius: 0.5rem;
+    background-color: #2a2a2a;
+    color: white;
+    padding: 0.50rem;
+    position: relative;
+    bottom: -10px;
+}
+
+.instructions > svg {
+    margin-right: 0.25rem;
+}
+
+.offscreen {
+    position: absolute;
+    left: -9999px;
+}
+
+.hide {
+    display: none;
+}
+
+.valid {
+    color: limegreen;
+    margin-left: 0.25rem;
+}
+
+.invalid {
+    color: red;
+    margin-left: 0.25rem;
+}
+
+.errmsg {
+    background-color: lightpink;
+    color: firebrick;
+    font-weight: bold;
+    padding: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.line {
+    display: inline-block;
+}
+.mainadmin {
+  background-color: #1E1E1E;
+  font-family: Montserrat;
+  color: white;
+  font-size: 18px;
+  padding-left: 50px;
+}
+
+.sidenav {
+  height: 100%;
+  width: 20%;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  font-size: 15px;
+  color: #FFFFFF;
+  background-color: #2C2C2C;
+  overflow-x: hidden;
+  padding-top: 10px;
+  font-size: 12px;
+  color: FFFFFF;
+  padding-left: 10px;
+}
+
+.sidenav a {
+  padding: 8px 6px 10px 20px;
+  text-decoration: none;
+  font-size: 20px;
+  color: #FFFFFF;
+  display: block;
+  padding-left: 20px;
+}
+
+.imghighlight1 {
+  height: 23px;
+  margin-right: 15px;
+}
+
+.active-tab {
+  border-bottom: 2px solid #C70000;
+  cursor: pointer; /* Change cursor to pointer when hovering over active panes */
+  }
+
+
+.column-divider {
+  height: 100%;
+  margin: auto 10px;
+}
+
+.btndeactivate {
+  background-color: #C70000;
+  padding: 6px 6px;
+  margin: 0px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.btnremove {
+  background-color: #4B4B4B;
+  padding: 6px 6px;
+  color: white;
+  margin: 0px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.btnreactivate {
+  background-color: #4CAF50;
+  padding: 6px 6px;
+  margin: 0px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.tablestyle {
+  height: 50px;
+}
+
+.searchstyling {
+  background-color: #484848;
+  border-radius: 10px;
+  float: right;
+  width: 500px;
+  height: 40px;
+  margin-left: 400px;
+  margin-right: 100px;
+}
+
+.btnout {
+  background-color: #C70000;
+  color: white;
+  border-radius: 20px;
+  width: 100px;
+  font-size: 15px;
+  height: 40px;
+  position: absolute;
+  bottom: 20px; /* Adjust this value as needed */
+  right: 20px; /* Adjust this value as needed */
+}
+
+
+/* Bootstrap adjustments */
+.sidenav {
+  /* Add Bootstrap classes */
+  padding: 20px;
+}
+
+.btnout {
+  /* Add Bootstrap classes */
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+  width: 50%; /* Adjust width as needed */
+  margin-top: 20px;
+}
+
+
+.joinedOn{
+  padding-right: 400px;
+}
+
+.test{
+  align-items: center;
+}
+
+.active-pane {
+  cursor: pointer; /* Change cursor to pointer when hovering over active panes */
+}
+
+[data-column-id="name"].rdt_TableCol {
+  font-size: 20px;
+  color: white;
+  font-weight: 600;
+  background-color: #2C2C2C;
+}
+
+[data-column-id="joinedon"].rdt_TableCol {
+  font-size: 20px;
+  color: white;
+  font-weight: 600;
+  background-color: #2C2C2C;
+}
+
+[data-column-id="control"].rdt_TableCol {
+  font-size: 20px;
+  color: white;
+  font-weight: 600;
+  background-color: #2C2C2C;
+}
