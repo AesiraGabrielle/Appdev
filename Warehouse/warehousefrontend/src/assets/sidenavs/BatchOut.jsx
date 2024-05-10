@@ -1,0 +1,63 @@
+import React, { useState } from 'react';
+import { Modal, Button } from 'react-bootstrap';
+
+const BatchOut = ({ showModal, handleCloseModal, addToDataTable }) => {
+  const [formData, setFormData] = useState({
+    itemNumber: '',
+    itemName: '',
+    quantity: '',
+    batchNumber: '',
+    employeeID: ''
+  });
+
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+    setFormData({
+      ...formData,
+      [name]: value
+    });
+  };
+
+  const handleBatchOut = () => {
+    // Pass the form data to the addToDataTable function
+    addToDataTable(formData);
+    // Reset the form data to clear the inputs
+    setFormData({
+      itemNumber: '',
+      itemName: '',
+      quantity: '',
+      batchNumber: '',
+      employeeID: ''
+    });
+    handleCloseModal();
+  };
+  
+
+  return (
+    <Modal show={showModal} onHide={handleCloseModal} className="modalbatches">
+      <Modal.Header closeButton>
+        <Modal.Title>Batch Out</Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+        <form>
+          <p className="batchestext"><strong>Item Number:</strong></p>
+          <input type="text" name="itemNumber" className="form-control input_user wider-modal float-right mb-3" value={formData.itemNumber} onChange={handleInputChange} placeholder="Item Number" />
+          <p className="batchestext"><strong>Item Name:</strong></p>
+          <input type="text" name="itemName" className="form-control input_user wider-modal float-right mb-3" value={formData.itemName} onChange={handleInputChange} placeholder="Item Name" />
+          <p className="batchestext"><strong>Quantity:</strong></p>
+          <input type="text" name="quantity" className="form-control input_user wider-modal float-right mb-3" value={formData.quantity} onChange={handleInputChange} placeholder="Quantity" />
+          <p className="batchestext"><strong>Batch Number:</strong></p>
+          <input type="text" name="batchNumber" className="form-control input_user wider-modal float-right mb-3" value={formData.batchNumber} onChange={handleInputChange} placeholder="Batch Number" />
+          <p className="batchestext"><strong>Employee ID:</strong></p>
+          <input type="text" name="employeeID" className="form-control input_user wider-modal float-right mb-3" value={formData.employeeID} onChange={handleInputChange} placeholder="Employee ID" />
+        </form>
+      </Modal.Body>
+      <Modal.Footer>
+        <Button className="edit" variant="secondary" onClick={handleBatchOut}>Batch Out</Button>
+        <Button className="close" variant="secondary" onClick={handleCloseModal}>Close</Button>
+      </Modal.Footer>
+    </Modal>
+  );
+};
+
+export default BatchOut;
