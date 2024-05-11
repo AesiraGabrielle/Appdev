@@ -18,8 +18,6 @@ const Sidebar = () => {
   const redirectToReturnedPage = () => {
     navigate('/returned');}
 
-  const redirectToAboutPage = () => {
-    navigate('/about');}
 
   const redirectToContactsPage = () => {
     navigate('/contacts');}
@@ -31,7 +29,6 @@ const Sidebar = () => {
         <a href="#stocks" onClick={redirectToStocksPage}>Stocks</a>
         <a href="#items" onClick={redirectToItemsPage}>Items</a>
         <a href="#returned" onClick={redirectToReturnedPage}>Returned</a>
-        <a href="#about" onClick={redirectToAboutPage}>About</a>
         <a href="#contacts" onClick={redirectToContactsPage}>WIS Contacts</a>
       </ul>
     </div>

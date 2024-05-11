@@ -19,8 +19,9 @@ const BatchOut = ({ showModal, handleCloseModal, addToDataTable }) => {
   };
 
   const handleBatchOut = () => {
-    // Pass the form data to the addToDataTable function
-    addToDataTable(formData);
+    // Pass only the relevant data (itemName and quantity) to the addToDataTable function
+    const { itemName, quantity } = formData;
+    addToDataTable(formData, 'Batch Out');
     // Reset the form data to clear the inputs
     setFormData({
       itemNumber: '',
@@ -29,8 +30,9 @@ const BatchOut = ({ showModal, handleCloseModal, addToDataTable }) => {
       batchNumber: '',
       employeeID: ''
     });
-    handleCloseModal();
+    handleCloseModal(); // Call handleCloseModal here
   };
+  
   
 
   return (
@@ -40,7 +42,7 @@ const BatchOut = ({ showModal, handleCloseModal, addToDataTable }) => {
       </Modal.Header>
       <Modal.Body>
         <form>
-          <p className="batchestext"><strong>Item Number:</strong></p>
+        <p className="batchestext"><strong>Item Number:</strong></p>
           <input type="text" name="itemNumber" className="form-control input_user wider-modal float-right mb-3" value={formData.itemNumber} onChange={handleInputChange} placeholder="Item Number" />
           <p className="batchestext"><strong>Item Name:</strong></p>
           <input type="text" name="itemName" className="form-control input_user wider-modal float-right mb-3" value={formData.itemName} onChange={handleInputChange} placeholder="Item Name" />

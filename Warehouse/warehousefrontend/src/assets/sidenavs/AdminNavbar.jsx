@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import '../styles.css';
 import 'bootstrap/dist/css/bootstrap.min.css'; // Import Bootstrap CSS
 
-const Navbar = ({ searchQuery, setSearchQuery }) => {
+const AdminNavbar = ({ searchQuery, setSearchQuery }) => {
   const navigate = useNavigate();
 
   const redirectToUserProfilePage = () => {
@@ -51,4 +51,5 @@ const Navbar = ({ searchQuery, setSearchQuery }) => {
     </nav>
   );
 };
-export default Navbar;
+
+export default AdminNavbar;

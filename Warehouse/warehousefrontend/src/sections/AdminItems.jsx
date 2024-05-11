@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
 import { Card, Modal, Button } from 'react-bootstrap';
+import '../assets/styles.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Navbar from '../assets/sidenavs/Navbar';
-import Sidebar from '../assets/sidenavs/Sidebar';
+import AdminNavbar from '../assets/sidenavs/AdminNavbar';
+import AdminSidebar from '../assets/sidenavs/AdminSidebar';
 import BatchIn from '../assets/sidenavs/BatchIn'; // Import your Batches component
 import BatchOut from '../assets/sidenavs/BatchOut'; // Import your Batches component
 
 
-const Items = () => {
+const AdminItems = () => {
   const [imagesData, setImagesData] = useState([
     { src: "src/assets/images/hamburger.png", itemName: "Delicious hamburger", itemDescription: "Fast Food" , quantity:"50", batchNum:'1'},
     { src: "src/assets/images/ramen.png", itemName: "Hot ramen noodles", itemDescription: "Asian Cuisine" , quantity:"50", batchNum:'1'},
@@ -33,7 +34,7 @@ const Items = () => {
   const [itemDescription, setItemDescription] = useState("");
   const [quantity, setQuantity] = useState("");
   const [batchNum, setBatchNum] = useState("");
-  
+  const [searchQuery, setSearchQuery] = useState('');
   const [showBatchInModal, setShowBatchInModal] = useState(false);
   const [showBatchOutModal, setShowBatchOutModal] = useState(false);
 
@@ -62,9 +63,7 @@ const Items = () => {
   const handleHideBatchOutModal = () => setShowBatchOutModal(false);
 
   const addToItems = (newData) => {
-    // Generate URL for uploaded image
     const imageUrl = URL.createObjectURL(newData.image);
-    // Add the image URL to newData
     newData = { ...newData, imageUrl };
     setImagesData([...imagesData, newData]);
   };
@@ -86,10 +85,15 @@ const Items = () => {
     setSelectedImage(image);
     setShowModal(true);
   };
+  const filteredData = imagesData.filter(item =>
+    Object.values(item).some(value =>
+      typeof value === 'string' && value.toLowerCase().includes(searchQuery.toLowerCase())
+    )
+  );
 
   return (
     <div>
-      <Sidebar />
+      <AdminSidebar />
       <h3 style={{ paddingTop: '100px', paddingLeft: '375px', textAlign: 'left' }}>Items</h3>
       <Card style={{ width: '71%', height: 'auto', border: 'solid black', marginLeft: '430px', marginTop: '30px', marginBottom: '20px' }}>
         <Card.Body style={{ margin: '0', display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}>
@@ -104,7 +108,7 @@ const Items = () => {
 
         </Card.Body>
       </Card>
-      <Navbar />
+      <AdminNavbar searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
       {/* Modal */}
       <Modal show={showModal} onHide={() => setShowModal(false)} centered>
         <Modal.Header closeButton>
@@ -171,4 +175,4 @@ const Items = () => {
   );
 };
 
-export default Items;
+export default AdminItems;

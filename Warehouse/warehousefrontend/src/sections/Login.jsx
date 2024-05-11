@@ -4,7 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import '../assets/styles.css';
 
 const Login = () => {
-        const navigate = useNavigate();
+    const navigate = useNavigate();
     
     const redirectToRegisterPage = () => {
         navigate('/register');
@@ -13,6 +13,11 @@ const Login = () => {
     const redirectToHomePage = () => {
         navigate('/home');
     }
+
+    const redirectToAdminLoginPage = () => {
+        navigate('/adminlogin');
+    }
+
     return (
         <div>
             <div className="containerlogin d-flex justify-content-center align-items-center vh-100">
@@ -52,7 +57,7 @@ const Login = () => {
                             Don&apos;t have an account? <a href="#" className="ml-2" onClick={redirectToRegisterPage}> Sign Up</a>
                         </div>
                         <div className="d-flex justify-content-center links">
-                            <a href="#">Forgot your password?</a>
+                            <a href="#" onClick={redirectToAdminLoginPage}>Are you an Admin?</a>
                         </div>
                     </div>
                 </div>

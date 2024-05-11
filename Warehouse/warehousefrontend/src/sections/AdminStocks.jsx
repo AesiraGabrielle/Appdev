@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { Card } from 'react-bootstrap';
 import '../assets/styles.css';
 import DataTable from 'react-data-table-component';
-import Navbar from '../assets/sidenavs/Navbar';
-import Sidebar from '../assets/sidenavs/Sidebar';
+import AdminNavbar from '../assets/sidenavs/Navbar';
+import AdminSidebar from '../assets/sidenavs/AdminSidebar';
 import BatchIn from '../assets/sidenavs/BatchIn'; 
 import BatchOut from '../assets/sidenavs/BatchOut'; 
 
@@ -61,7 +61,7 @@ const columns = [
   },
 ];
 
-const Stocks = () => {
+const AdminStocks = () => {
   const [showBatchInModal, setShowBatchInModal] = useState(false);
   const [showBatchOutModal, setShowBatchOutModal] = useState(false);
   const [modalType, setModalType] = useState(''); // State to track the modal type
@@ -94,7 +94,6 @@ const Stocks = () => {
   const handleCloseModal = () => {
     setShowBatchOutModal(false); // or setShowBatchInModal(false) depending on the modal you want to close
   };
-  
   
 
   const handleHideBatchInModal = () => setShowBatchInModal(false);
@@ -131,15 +130,17 @@ const Stocks = () => {
     )
   );
   
+  
+  
 
   return (
     <div className="container-fluid-home">
       <div className="row">
         <div className="col-md-3">
-          <Sidebar />
+          <AdminSidebar />
         </div>
         <div className="col-md-8"> 
-        <Navbar searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
+        <AdminNavbar searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
           <h3 style={{ paddingTop: '100px', color: 'black' }}>Stocks</h3>
           <Card className="data-card">
             <Card.Body style={{ padding: '2rem', margin: 0 }}>
@@ -189,4 +190,4 @@ const Stocks = () => {
   );
 };
 
-export default Stocks;
+export default AdminStocks;

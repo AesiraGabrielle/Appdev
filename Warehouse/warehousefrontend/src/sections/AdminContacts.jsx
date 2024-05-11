@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import { Card, Modal, Button } from 'react-bootstrap';
+import { Card, Button } from 'react-bootstrap';
 import '../assets/styles.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Navbar from '../assets/sidenavs/Navbar';
-import Sidebar from '../assets/sidenavs/Sidebar';
+import AdminNavbar from '../assets/sidenavs/AdminNavbar';
+import AdminSidebar from '../assets/sidenavs/AdminSidebar';
 
-const Contacts = () => {
+const AdminContacts = () => {
   const images = [
     "src/assets/images/facebook.png",
     "src/assets/images/twitter.png",
@@ -16,17 +16,15 @@ const Contacts = () => {
 
   ];
 
-  const [showModal, setShowModal] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
 
   const handleButtonClick = (src) => {
     setSelectedImage(src);
-    setShowModal(true);
   };
 
   return (
     <div>
-      <Sidebar />
+      <AdminSidebar />
       <h3 style={{ paddingTop: '100px', paddingLeft: '380px', textAlign: 'left' }}>Contacts</h3>
       <Card style={{ width: '71%', height: 'auto', border:  'solid black', marginLeft: '430px',marginTop: '30px', marginBottom:'20px'}}>
         <Card.Body style={{ margin: '0', display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}>
@@ -38,11 +36,11 @@ const Contacts = () => {
           ))}
         </Card.Body>
       </Card>
-      <Navbar />
+      <AdminNavbar />
      
 
     </div>
   );
 };
 
-export default Contacts;
+export default AdminContacts;

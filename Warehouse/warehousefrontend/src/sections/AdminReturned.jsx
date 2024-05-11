@@ -3,29 +3,29 @@ import { Card, Modal, Button } from 'react-bootstrap';
 import DataTable from 'react-data-table-component';
 import '../assets/styles.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Navbar from '../assets/sidenavs/Navbar';
-import Sidebar from '../assets/sidenavs/Sidebar';
+import AdminNavbar from '../assets/sidenavs/AdminNavbar';
+import AdminSidebar from '../assets/sidenavs/AdminSidebar';
 import Add from '../assets/sidenavs/Add';
 
-const Returned = ({ stocksData, setStocksData }) => {
+const AdminReturned = () => {
   const [showEditModal, setShowEditModal] = useState(false);
   const [showAddOptionsModal, setShowAddOptionsModal] = useState(false); // State for AddOptionsModal
   const [rowData, setRowData] = useState(null);
-  const [editedData, setEditedData] = useState(null);
   const [searchQuery, setSearchQuery] = useState('');
+  const [editedData, setEditedData] = useState(null);
   const [data, setData] = useState([
-    { itemNum: 1, date: '12-13-2023', itemName: 'SunSilk', desc: 'Shampoo', quantity: '10' },
-    { itemNum: 2, date: '04-26-2024', itemName: 'Rice', desc: 'Food', quantity: '10' },
-    { itemNum: 3, date: '05-02-2024', itemName: 'Safe Guard', desc: 'Soap', quantity: '10' },
-    { itemNum: 4, date: '12-13-2023', itemName: 'Keratin', desc: 'Shampoo', quantity: '10' },
-    { itemNum: 5, date: '04-26-2024', itemName: 'Hotdog', desc: 'Food', quantity: '10' },
-    { itemNum: 6, date: '05-02-2024', itemName: 'Bioderm', desc: 'Soap', quantity: '10' },
-    { itemNum: 7, date: '12-13-2023', itemName: 'Eggs', desc: 'Food', quantity: '10' },
-    { itemNum: 8, date: '04-26-2024', itemName: 'Sardines', desc: 'Food', quantity: '10' },
-    { itemNum: 9, date: '05-02-2024', itemName: 'CreamSilk', desc: 'Conditioner', quantity: '10' },
-    { itemNum: 10, date: '12-13-2023', itemName: 'Ketchup', desc: 'Food', quantity: '10' },
-    { itemNum: 11, date: '04-26-2024', itemName: 'Bluebay', desc: 'Food', quantity: '10' },
-    { itemNum: 12, date: '05-02-2024', itemName: 'Palmolive', desc: 'Conditioner', quantity: '10' },
+    { itemNum: 1, date: '12-13-2023', itemName: 'SunSilk',desc: 'Shampoo',  quantity:'10' },
+    { itemNum: 2, date: '04-26-2024', itemName: 'Rice' ,  desc: 'Food',   quantity:'10'},
+    { itemNum: 3, date: '05-02-2024', itemName: 'Safe Guard', desc: 'Soap',    quantity:'10' },
+    { itemNum: 4, date: '12-13-2023', itemName: 'SunSilk' , desc: 'Shampoo',  quantity:'10'},
+    { itemNum: 5, date: '04-26-2024', itemName: 'Hotdog',desc: 'Food',   quantity:'10' },
+    { itemNum: 6, date: '05-02-2024', itemName: 'Safe Guard',desc: 'Soap',   quantity:'10' },
+    { itemNum: 7, date: '12-13-2023', itemName: 'Eggs', desc: 'Food',  quantity:'10'},
+    { itemNum: 8, date: '04-26-2024', itemName: 'Sardines' , desc: 'Food',  quantity:'10'},
+    { itemNum: 9, date: '05-02-2024', itemName: 'CreamSilk' , desc: 'Conditioner',   quantity:'10'},
+    { itemNum: 10, date: '12-13-2023', itemName: 'Ketchup' , desc: 'Food',   quantity:'10'},
+    { itemNum: 11, date: '04-26-2024', itemName: 'Rice',  desc: 'Food',   quantity:'10' },
+    { itemNum: 12, date: '05-02-2024', itemName: 'Creamsilk',  desc: 'Conditioner', quantity:'10' },
   ]);
 
   const handleEdit = (row) => {
@@ -33,12 +33,6 @@ const Returned = ({ stocksData, setStocksData }) => {
     setEditedData({ ...row }); // Clone the row data for editing
     setShowEditModal(true);
   };
-
-  const filteredData = data.filter(item =>
-    Object.values(item).some(value =>
-      typeof value === 'string' && value.toLowerCase().includes(searchQuery.toLowerCase())
-    )
-  );
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -61,60 +55,49 @@ const Returned = ({ stocksData, setStocksData }) => {
     const newData = data.filter(item => item !== row);
     setData(newData);
   };
-  
 
+  
   const handleShowAddOptionsModal = () => setShowAddOptionsModal(true); // Function to show AddOptionsModal
 
-  const handleCloseAddOptionsModal = () => setShowAddOptionsModal(false); // Function to hide AddOptionsModal
-  
-  const handleAdd = (newData) => {
-    const newId = data.length + 1;
-    newData.id = newId;
-    setData([...data, newData]);
-  
-    // Update the quantity in the stocks' data table
-    if (stocksData && setStocksData) {
-      const existingItem = stocksData.find(item => item.itemName === newData.itemName);
-      if (existingItem) {
-        const updatedQuantity = parseInt(existingItem.quantity) + parseInt(newData.quantity);
-        const updatedData = stocksData.map(item => {
-          if (item.itemName === newData.itemName) {
-            return { ...item, quantity: updatedQuantity.toString() };
-          }
-          return item;
-        });
-        setStocksData(updatedData);
-      }
-    }
-  
+  const handleCloseAddOptionsModal = () => {
     setShowAddOptionsModal(false);
-  };
-  
-  
-  
+    setEditedData({}); // Reset editedData to clear inputs
+};
 
 
-  const columns = [
-    {
+const handleAdd = (newData) => {
+  const newId = data.length > 0 ? Math.max(...data.map(item => item.itemNum)) + 1 : 1;
+  const newItem = { ...newData, itemNum: newId }; // Create a new item with the provided data and the new item number
+  setData([...data, newItem]); // Add the new item to the data array
+  setShowAddOptionsModal(false); // Close the add modal
+  setEditedData({}); // Reset editedData to clear inputs
+};
+
+
+
+
+const columns = [
+  {
       name: 'Returned Date',
       selector: row => row.date,
       id: "date",
       sortable: true, 
       style: {
+          fontSize: '18px',
+          color: 'black',
+      },
+  },
+  {
+    name: 'Return ID',
+    selector: row => row.itemNum,
+    id: "itemNum",
+    sortable: true,
+    style: {
         fontSize: '18px',
         color: 'black',
-      },
     },
-    {
-      name: 'Return ID',
-      selector: row => row.itemNum,
-      id: "itemNum",
-      sortable: true,
-      style: {
-        fontSize: '18px',
-        color: 'black',
-      },
-    },
+  },
+  
     {
       name: 'Item Name',
       selector: row => row.itemName,
@@ -165,15 +148,20 @@ const Returned = ({ stocksData, setStocksData }) => {
     setRowData(null);
     setEditedData(null);
   };
+  const filteredData = data.filter(item =>
+    Object.values(item).some(value =>
+      typeof value === 'string' && value.toLowerCase().includes(searchQuery.toLowerCase())
+    )
+  );
 
   return (
     <div className="container-fluid-home">
       <div className="row">
         <div className="col-md-3">
-          <Sidebar />
+          <AdminSidebar />
         </div>
         <div className="col-md-8"> 
-        <Navbar searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
+        <AdminNavbar searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
           <h3 style={{ paddingTop: '100px', color: 'black' }}>Returned</h3>
           <Card className="data-card">
             <Card.Body style={{ padding: '2rem', margin: 0, width:'100%' }}>
@@ -212,7 +200,7 @@ const Returned = ({ stocksData, setStocksData }) => {
             </Card.Body>
           </Card>
           <div className="buttons-container2">
-          <button onClick={handleShowAddOptionsModal}>Add</button>
+          <button onClick={handleShowAddOptionsModal} style={{ marginRight:'-80px'}} >Add</button>
           <Add showModal={showAddOptionsModal} handleCloseModal={handleCloseAddOptionsModal} handleAdd={handleAdd} /> {/* Pass handleAdd function to Add component */}
 
           </div>
@@ -244,4 +232,4 @@ const Returned = ({ stocksData, setStocksData }) => {
   );
 };
 
-export default Returned;
+export default AdminReturned;

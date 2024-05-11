@@ -1,16 +1,16 @@
 import React, { useState } from 'react';
 import '../assets/styles.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Navbar from '../assets/sidenavs/Navbar';
-import Sidebar from '../assets/sidenavs/Sidebar';
+import AdminNavbar from '../assets/sidenavs/AdminNavbar';
+import AdminSidebar from '../assets/sidenavs/AdminSidebar';
 import { Modal, Button } from 'react-bootstrap';
 
-const UserProfile = () => {
+const AdminProfile = () => {
   const [showModal, setShowModal] = useState(false);
-  const [name, setName] = useState('Sequito, Alex Gabrielle Marri A.');
-  const [employeeID, setEmployeeID] = useState('2100916');
+  const [name, setName] = useState('Dorego, Matt');
+  const [employeeID, setEmployeeID] = useState('2000976');
   const [birthdate, setBirthdate] = useState('12-13-2002');
-  const [email, setEmail] = useState('gabby@gab.com');
+  const [email, setEmail] = useState('matt@miming.com');
   const [phoneNumber, setPhoneNumber] = useState('+639515826846');
   const [image, setImage] = useState('src\\assets\\images\\user.png'); // Default image path
 
@@ -23,7 +23,6 @@ const UserProfile = () => {
   };
 
   const handleSaveChanges = () => {
-    // Handle saving changes to profile here
     setShowModal(false);
   };
 
@@ -44,10 +43,10 @@ const UserProfile = () => {
     <div className="container-fluid h-100">
       <div className="row h-100">
         <div className="col-md-3">
-          <Sidebar />
+          <AdminSidebar />
         </div>
         <div className="col-md-8 d-flex align-items-center justify-content-center">
-          <Navbar className="sticky-top" />
+          <AdminNavbar className="sticky-top" />
           <div className="card h-1000 card-custom">
             <div className="card-body">
               <div className="row align-items-center">
@@ -135,4 +134,4 @@ const UserProfile = () => {
   );
 };
 
-export default UserProfile;
+export default AdminProfile;

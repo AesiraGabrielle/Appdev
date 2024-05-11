@@ -32,6 +32,7 @@ const BatchIn = ({ showModal, handleCloseModal, addToItems, addToDataTable, hand
   const handleBatchIn = () => {
     const newData = {
       itemNum: formData.itemNumber,
+      id: formData.id,
       type: formData.type,
       date: formData.receivedDate,
       itemName: formData.itemName,
@@ -45,11 +46,12 @@ const BatchIn = ({ showModal, handleCloseModal, addToItems, addToDataTable, hand
     if (addToItems) {
       addToItems(newData);
     } else if (addToDataTable) {
-      addToDataTable(newData);
+      addToDataTable(newData, 'Batch In');
     }
 
     setFormData({
       receivedDate: '',
+      id:'', 
       type: '',
       itemNumber: '',
       itemName: '',
@@ -86,8 +88,9 @@ const BatchIn = ({ showModal, handleCloseModal, addToItems, addToDataTable, hand
             <option value="">Select Type</option>
             <option value="Returned">Returned</option>
             <option value="Batch in">Batch in</option>
-            <option value="Batch out">Batch out</option>
           </select>
+          <p className="batchestext"><strong>ID:</strong></p>
+          <input type="text" name="itemNumber" className="form-control input_user wider-modal float-right mb-3" value={formData.itemNumber} onChange={handleInputChange} placeholder="ID" />
           <p className="batchestext"><strong>Item Number:</strong></p>
           <input type="text" name="itemNumber" className="form-control input_user wider-modal float-right mb-3" value={formData.itemNumber} onChange={handleInputChange} placeholder="Item Number" />
           <p className="batchestext"><strong>Item Name:</strong></p>
