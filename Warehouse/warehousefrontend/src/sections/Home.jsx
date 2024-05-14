@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Card } from 'react-bootstrap';
 import DataTable from 'react-data-table-component';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -6,26 +6,52 @@ import Navbar from '../assets/sidenavs/Navbar';
 import Sidebar from '../assets/sidenavs/Sidebar';
 import BatchIn from '../assets/sidenavs/BatchIn'; 
 import BatchOut from '../assets/sidenavs/BatchOut'; 
+import axios from 'axios';
 
 const Home = () => {
   const [showBatchInModal, setShowBatchInModal] = useState(false);
   const [showBatchOutModal, setShowBatchOutModal] = useState(false);
   const [modalType, setModalType] = useState(''); // State to track the modal type
   const [searchQuery, setSearchQuery] = useState('');
-  const [dataTableData, setDataTableData] = useState([
-    { itemNum: 1, type: 'Batch In', date: '12-13-2023', itemName: 'SunSilk' },
-    { itemNum: 2, type: 'Batch Out', date: '04-26-2024', itemName: 'Rice' },
-    { itemNum: 3, type: 'Returned', date: '05-02-2024', itemName: 'Safe Guard' },
-    { itemNum: 4, type: 'Batch In', date: '12-13-2023', itemName: 'SunSilk' },
-    { itemNum: 5, type: 'Batch Out', date: '04-26-2024', itemName: 'Hotdog' },
-    { itemNum: 6, type: 'Returned', date: '05-02-2024', itemName: 'Safe Guard' },
-    { itemNum: 7, type: 'Batch In', date: '12-13-2023', itemName: 'Eggs' },
-    { itemNum: 8, type: 'Batch Out', date: '04-26-2024', itemName: 'Sardines' },
-    { itemNum: 9, type: 'Returned', date: '05-02-2024', itemName: 'Conditioner' },
-    { itemNum: 10, type: 'Batch In', date: '12-13-2023', itemName: 'Ketchup' },
-    { itemNum: 11, type: 'Batch Out', date: '04-26-2024', itemName: 'Rice' },
-    { itemNum: 12, type: 'Returned', date: '05-02-2024', itemName: 'Conditioner' },
-  ]);
+  
+  const [dataTableData, setDataTableData] = useState([]);
+
+  useEffect(() => {
+    axios.get(`http://localhost:8000/api/batch`)
+      .then(response => {
+        console.log(response.data);
+
+        // Filter the data to include only entries with batchInOut value "Batch In"
+        const batchInData = response.data.filter(item => item.batchInOut === "Batch In" || item.batchInOut === "Batch Out");
+
+        // Extract specific properties for the filtered data and update the state
+        const newData = batchInData.map(item => ({
+          itemNum: item.id,
+          type: item.batchInOut,
+          itemName: item.item_name,
+          date: item.recieved_date,
+          quantity: item.quantity,
+        }))
+        setDataTableData(newData);
+      })
+      .catch(error => {
+          console.error('Errors:', error.response.data.error);
+      });
+  }, []);
+
+    // { itemNum: 1, type: 'Batch In', date: '12-13-2023', itemName: 'SunSilk' },
+    // { itemNum: 2, type: 'Batch Out', date: '04-26-2024', itemName: 'Rice' },
+    // { itemNum: 3, type: 'Returned', date: '05-02-2024', itemName: 'Safe Guard' },
+    // { itemNum: 4, type: 'Batch In', date: '12-13-2023', itemName: 'SunSilk' },
+    // { itemNum: 5, type: 'Batch Out', date: '04-26-2024', itemName: 'Hotdog' },
+    // { itemNum: 6, type: 'Returned', date: '05-02-2024', itemName: 'Safe Guard' },
+    // { itemNum: 7, type: 'Batch In', date: '12-13-2023', itemName: 'Eggs' },
+    // { itemNum: 8, type: 'Batch Out', date: '04-26-2024', itemName: 'Sardines' },
+    // { itemNum: 9, type: 'Returned', date: '05-02-2024', itemName: 'Conditioner' },
+    // { itemNum: 10, type: 'Batch In', date: '12-13-2023', itemName: 'Ketchup' },
+    // { itemNum: 11, type: 'Batch Out', date: '04-26-2024', itemName: 'Rice' },
+    // { itemNum: 12, type: 'Returned', date: '05-02-2024', itemName: 'Conditioner' },
+
 
   const handleShowBatchInModal = () => {
     setModalType('Batch In'); // Set modal type to Batch In
