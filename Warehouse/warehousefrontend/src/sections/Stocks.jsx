@@ -67,7 +67,7 @@ const Stocks = () => {
   const [modalType, setModalType] = useState(''); // State to track the modal type
   const [searchQuery, setSearchQuery] = useState('');
   const [dataTableData, setDataTableData] = useState([
-    // { itemNum: 1, date: '12-13-2023', itemName: 'SunSilk', desc: 'Shampoo', quantity: '10' },
+    { itemNum: 1, date: '12-13-2023', itemName: 'SunSilk', desc: 'Shampoo', quantity: '10' },
     // { itemNum: 2, date: '04-26-2024', itemName: 'Rice', desc: 'Food', quantity: '10' },
     // { itemNum: 3, date: '05-02-2024', itemName: 'Safe Guard', desc: 'Soap', quantity: '10' },
     // { itemNum: 4, date: '12-13-2023', itemName: 'Keratin', desc: 'Shampoo', quantity: '10' },
@@ -92,10 +92,9 @@ const Stocks = () => {
         // Extract specific properties for the filtered data and update the state
         const newData = batchInData.map(item => ({
           itemNum: item.id,
-          date: item.recieved_date,
+          date: item.recieved_date, 
           desc: item.description,
           itemName: item.item_name,
-          date: item.recieved_date,
           quantity: item.quantity,
         }))
         setDataTableData(newData);

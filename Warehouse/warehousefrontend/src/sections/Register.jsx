@@ -208,7 +208,8 @@ const Register = () => {
                             </div>
                             <div className="col">
                                 <div className="input-group mb-3">
-                                    <input type="text" name="employeeId" value={employeeId} 
+                                    <input type="text" name="employeeId" 
+                                    value={employeeId} 
                                     onChange={(e) => {
                                         const inputText = e.target.value;
                                         if (numberRegex.test(inputText)) {

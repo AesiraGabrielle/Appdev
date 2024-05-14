@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {useNavigate} from 'react-router-dom';
-
+import axios from 'axios';
 
 
 const AdminLogin = () => {
-
+    const [employeeId, setEmployeeId] = useState('');
+    const [password, setPassword] = useState('');
     const navigate = useNavigate();
     
     const redirectToRegisterPage = () => {
@@ -12,7 +13,25 @@ const AdminLogin = () => {
     }
 
     const redirectToAdminHome = () => {
-        navigate('/adminhome');
+        
+        const credentials = {
+            employee_id: employeeId,
+            password: password,
+            position: "Admin"
+        };
+        console.log(credentials);
+
+        axios.post('http://localhost:8000/api/auth/login', credentials)
+            .then(response => {
+                const token = response.data.token;
+                console.log('Logged in successfully', 'Token:', token);
+                document.cookie = `token=${token}; expires=${new Date(Date.now() + 60 * 24 * 3 * 60 * 1000).toUTCString()}`;
+                navigate('/adminhome');
+            })
+            .catch(error => {
+                console.log(error);
+                setError(error.response.data.message);
+            });
     }
 
     const redirectToAdminRegisterPage = () => {
@@ -41,12 +60,13 @@ const AdminLogin = () => {
                                             <h5 className="fw-normal mb-3 pb-3" style={{ letterSpacing: '1px' }}>Sign into your account</h5>
 
                                             <div data-mdb-input-init className="form-outline mb-4">
-                                                <input type="email" id="form2Example17" className="form-control form-control-lg" />
+                                                <input type="email" name="employeeId" value={employeeId} onChange={(e) => { const inputText = e.target.value; if (/^\d{0,6}$/.test(inputText)) {  setEmployeeId(inputText); }}} id="form2Example17" className="form-control form-control-lg" />
                                                 <label className="form-label" htmlFor="form2Example17">Admin ID</label>
                                             </div>
 
                                             <div data-mdb-input-init className="form-outline mb-4">
-                                                <input type="password" id="form2Example27" className="form-control form-control-lg" />
+                                                
+                                                <input type="password" name="password" value={password} onChange={(e) => setPassword(e.target.value)} id="form2Example27" className="form-control form-control-lg" />
                                                 <label className="form-label" htmlFor="form2Example27">Password</label>
                                             </div>
 

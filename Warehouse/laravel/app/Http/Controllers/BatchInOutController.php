@@ -50,7 +50,7 @@ class BatchInOutController extends Controller
         // Assign file paths to user model
         $batchinout->logo = '/storage/' . $profilePath;
         $batchinout->save();
-
+        
         return response()->json([
             "status" => 1,
             "message" => "Batch successfully added",
@@ -58,5 +58,7 @@ class BatchInOutController extends Controller
         ], 200);
 
     }
+
+
     
 }

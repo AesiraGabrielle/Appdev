@@ -97,7 +97,7 @@ class UserController extends Controller
     
     public function login(Request $request)
     {
-        $credentials = $request->only('employee_id', 'password');
+        $credentials = $request->only('employee_id', 'password', 'position');
 
         try {
             if (!$token = JWTAuth::attempt($credentials)) {
@@ -166,7 +166,7 @@ class UserController extends Controller
     {
         $user = User::find($id);
         if (!$user) {
-            return response()->json(['error' => 'Car not found'], 404);
+            return response()->json(['error' => 'user not found'], 404);
         }
 
         $user->update($request->all());

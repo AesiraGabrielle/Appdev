@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Modal, Button } from 'react-bootstrap';
+import axios from 'axios';
 
 const BatchOut = ({ showModal, handleCloseModal, addToDataTable }) => {
   const [formData, setFormData] = useState({
@@ -30,6 +31,8 @@ const BatchOut = ({ showModal, handleCloseModal, addToDataTable }) => {
     });
     handleCloseModal(); // Call handleCloseModal here
   };
+
+  
   
   
 

@@ -1,0 +1,39 @@
+  version: '3'
+  services:
+    laravel:
+      build:
+        context: ./laravel
+        dockerfile: Dockerfile
+      ports:
+        - "8000:8000"
+      volumes:
+        - ./laravel:/var/www/html
+      depends_on:
+        - mysql
+
+    mysql:
+      image: mysql:5.7
+      environment:
+        MYSQL_DATABASE: warehouse
+        MYSQL_ROOT_PASSWORD: gabby
+      ports:
+        - "3307:3306"
+
+    react-app:
+      build:
+        context: ./warehousefrontend
+        dockerfile: Dockerfile
+      ports:
+        - "5173:5173"  # Map Vue.js app to port 8081
+      volumes:
+        - ./warehousefrontend:/app
+      depends_on:
+        - laravel
+
+    phpmyadmin:
+      image: phpmyadmin/phpmyadmin
+      environment:
+        PMA_HOST: mysql
+        MYSQL_ROOT_PASSWORD: arts
+      ports:
+        - "8080:80"  # Map phpMyAdmin to port 8080

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button, Card } from 'react-bootstrap';
 import '../assets/styles.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -6,6 +6,7 @@ import AdminSidebar from '../assets/sidenavs/AdminSidebar';
 import AdminNavbar from '../assets/sidenavs/AdminNavbar'; 
 import DataTable from 'react-data-table-component';
 import Breadcrumb from '../assets/sidenavs/Breadcrumb'; // Import the Breadcrumb component
+import axios from 'axios';
 
 const Employee = () => {
   const [view, setView] = useState('all'); 
@@ -48,6 +49,44 @@ const Employee = () => {
     { id: 30, name: 'JANE DOE', date: '2023-11-25', actions:'2100916' , verified: false, active: false },
     { id: 31, name: 'MICHAEL SMITH', date: '2023-11-30', actions:'2100916' , verified: false, active: false },
   ]);
+
+  useEffect(() => {
+
+    const cookieString = document.cookie;
+    if (cookieString) {
+      const tokenCookie = cookieString.split('; ').find(row => row.startsWith('token='));
+      if (tokenCookie) {
+        const token = tokenCookie.split('=')[1];
+        axios.get('http://localhost:8000/api/auth/show', {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        })
+          .then(response => {
+            console.log(response.data.user.employee_id);
+            axios.post(`http://localhost:8000/api/auth/update/${response.data.user.employee_id}`,{
+            })
+            .then(response => {
+              console.log(response.data)
+            })
+            .catch(error => {
+                console.error('Errors:', error.response.data.error);
+                // setError('An error occurred while registering. Please try again later.');
+            });
+          })
+          .catch(error => {
+            const now = new Date();
+            document.cookie = `token=; expires=${new Date(now.getTime() - 1000).toUTCString()}; path=/`;
+            console.error('Error fetching events:', error);
+          });
+      } else {
+        console.error('Token cookie not found.');
+      }
+    } else {
+      console.error('No cookies found.');
+    }
+
+  }, []);
   
   const columns = [
     {

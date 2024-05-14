@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Card, Modal, Button } from 'react-bootstrap';
 import DataTable from 'react-data-table-component';
 import '../assets/styles.css';
@@ -6,6 +6,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Navbar from '../assets/sidenavs/Navbar';
 import Sidebar from '../assets/sidenavs/Sidebar';
 import Add from '../assets/sidenavs/Add';
+import axios from 'axios';
 
 const Returned = ({ stocksData, setStocksData }) => {
   const [showEditModal, setShowEditModal] = useState(false);
@@ -14,19 +15,42 @@ const Returned = ({ stocksData, setStocksData }) => {
   const [editedData, setEditedData] = useState(null);
   const [searchQuery, setSearchQuery] = useState('');
   const [data, setData] = useState([
-    { itemNum: 1, date: '12-13-2023', itemName: 'SunSilk', desc: 'Shampoo', quantity: '10' },
-    { itemNum: 2, date: '04-26-2024', itemName: 'Rice', desc: 'Food', quantity: '10' },
-    { itemNum: 3, date: '05-02-2024', itemName: 'Safe Guard', desc: 'Soap', quantity: '10' },
-    { itemNum: 4, date: '12-13-2023', itemName: 'Keratin', desc: 'Shampoo', quantity: '10' },
-    { itemNum: 5, date: '04-26-2024', itemName: 'Hotdog', desc: 'Food', quantity: '10' },
-    { itemNum: 6, date: '05-02-2024', itemName: 'Bioderm', desc: 'Soap', quantity: '10' },
-    { itemNum: 7, date: '12-13-2023', itemName: 'Eggs', desc: 'Food', quantity: '10' },
-    { itemNum: 8, date: '04-26-2024', itemName: 'Sardines', desc: 'Food', quantity: '10' },
-    { itemNum: 9, date: '05-02-2024', itemName: 'CreamSilk', desc: 'Conditioner', quantity: '10' },
-    { itemNum: 10, date: '12-13-2023', itemName: 'Ketchup', desc: 'Food', quantity: '10' },
-    { itemNum: 11, date: '04-26-2024', itemName: 'Bluebay', desc: 'Food', quantity: '10' },
-    { itemNum: 12, date: '05-02-2024', itemName: 'Palmolive', desc: 'Conditioner', quantity: '10' },
+    // { itemNum: 1, date: '12-13-2023', itemName: 'SunSilk', desc: 'Shampoo', quantity: '10' },
+    // { itemNum: 2, date: '04-26-2024', itemName: 'Rice', desc: 'Food', quantity: '10' },
+    // { itemNum: 3, date: '05-02-2024', itemName: 'Safe Guard', desc: 'Soap', quantity: '10' },
+    // { itemNum: 4, date: '12-13-2023', itemName: 'Keratin', desc: 'Shampoo', quantity: '10' },
+    // { itemNum: 5, date: '04-26-2024', itemName: 'Hotdog', desc: 'Food', quantity: '10' },
+    // { itemNum: 6, date: '05-02-2024', itemName: 'Bioderm', desc: 'Soap', quantity: '10' },
+    // { itemNum: 7, date: '12-13-2023', itemName: 'Eggs', desc: 'Food', quantity: '10' },
+    // { itemNum: 8, date: '04-26-2024', itemName: 'Sardines', desc: 'Food', quantity: '10' },
+    // { itemNum: 9, date: '05-02-2024', itemName: 'CreamSilk', desc: 'Conditioner', quantity: '10' },
+    // { itemNum: 10, date: '12-13-2023', itemName: 'Ketchup', desc: 'Food', quantity: '10' },
+    // { itemNum: 11, date: '04-26-2024', itemName: 'Bluebay', desc: 'Food', quantity: '10' },
+    // { itemNum: 12, date: '05-02-2024', itemName: 'Palmolive', desc: 'Conditioner', quantity: '10' },
   ]);
+
+  useEffect(() => {
+    axios.get(`http://localhost:8000/api/batch`)
+      .then(response => {
+        console.log(response.data);
+
+        // Filter the data to include only entries with batchInOut value "Batch In"
+        const batchInData = response.data.filter(item => item.batchInOut === "Batch In" || item.batchInOut === "Batch Out");
+
+        // Extract specific properties for the filtered data and update the state
+        const newData = batchInData.map(item => ({
+          itemNum: item.id,
+          date: item.recieved_date, 
+          desc: item.description,
+          itemName: item.item_name,
+          quantity: item.quantity,
+        }))
+        setData(newData);
+      })
+      .catch(error => {
+          console.error('Errors:', error.response.data.error);
+      });
+  }, []);
 
   const handleEdit = (row) => {
     setRowData(row);
@@ -154,8 +178,8 @@ const Returned = ({ stocksData, setStocksData }) => {
           <Button variant="custom-red" onClick={() => handleRemove(row)}>Remove</Button>
         </div>
       ),
-      allowOverflow: true,
-      button: true,
+      // allowOverflow: true,
+      // button: true,
       width: '150px',
     },
   ];

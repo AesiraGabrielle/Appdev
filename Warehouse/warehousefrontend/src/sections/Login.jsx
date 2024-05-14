@@ -15,8 +15,10 @@ const Login = () => {
     const redirectToHomePage = () => {
         const credentials = {
             employee_id: employeeId,
-            password: password
+            password: password,
+            position: "User"
         };
+        console.log(credentials);
 
         axios.post('http://localhost:8000/api/auth/login', credentials)
             .then(response => {

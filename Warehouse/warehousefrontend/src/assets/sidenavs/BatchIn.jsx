@@ -22,6 +22,17 @@ const BatchIn = ({ showModal, handleCloseModal, addToItems, addToDataTable, hand
     const currentDate = new Date().toISOString().split('T')[0];
     setFormData(prevState => ({ ...prevState, date: currentDate }));
     setItemNum(prevItemNumber => prevItemNumber + 1);
+
+
+    axios.get(`http://localhost:8000/api/batch`,{
+    })
+    .then(response => {
+      console.log(response.data)
+    })
+    .catch(error => {
+        console.error('Errors:', error.response.data.error);
+        // setError('An error occurred while registering. Please try again later.');
+    });
     
   }, []);
   
