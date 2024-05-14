@@ -1,30 +1,63 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Card, Modal, Button } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Navbar from '../assets/sidenavs/Navbar';
 import Sidebar from '../assets/sidenavs/Sidebar';
 import BatchIn from '../assets/sidenavs/BatchIn'; // Import your Batches component
 import BatchOut from '../assets/sidenavs/BatchOut'; // Import your Batches component
+import axios from 'axios';
+
 
 
 const Items = () => {
+
+  useEffect(() => {
+    axios.get(`http://localhost:8000/api/batch`)
+      .then(response => {
+        console.log(response.data);
+
+        // Filter the data to include only entries with batchInOut value "Batch In"
+        const batchInData = response.data.filter(item => item.batchInOut === "Batch In");
+
+        // Extract specific properties for the filtered data and update the state
+        const newData = batchInData.map(item => ({
+          src: 'http://localhost:8000' + item.logo,
+          itemName: item.item_name,
+          itemDescription: item.description,
+          quantity: item.quantity,
+          batchNum: item.batch_info
+        }))
+
+        // Update the state with the new data
+        setImagesData(newData);
+      })
+      .catch(error => {
+          console.error('Errors:', error.response.data.error);
+      });
+  }, []);
+  
+
   const [imagesData, setImagesData] = useState([
-    { src: "src/assets/images/hamburger.png", itemName: "Delicious hamburger", itemDescription: "Fast Food" , quantity:"50", batchNum:'1'},
-    { src: "src/assets/images/ramen.png", itemName: "Hot ramen noodles", itemDescription: "Asian Cuisine" , quantity:"50", batchNum:'1'},
-    { src: "src/assets/images/pizza.png", itemName: "Cheesy pizza", itemDescription: "Italian Cuisine" , quantity:"50", batchNum:'1'},
-    { src: "src/assets/images/vegetable.png", itemName: "Fresh vegetables", itemDescription: "Healthy Food", quantity:"50", batchNum:'1' },
-    { src: "src/assets/images/ramen.png", itemName: "Spicy ramen noodles", itemDescription: "Asian Cuisine" , quantity:"50", batchNum:'1'},
-    { src: "src/assets/images/pizza.png", itemName: "Vegetarian pizza", itemDescription: "Italian Cuisine", quantity:"50" , batchNum:'1'},
-    { src: "src/assets/images/vegetable.png", itemName: "Organic vegetables", itemDescription: "Healthy Food" , quantity:"50", batchNum:'1'},
-    { src: "src/assets/images/ramen.png", itemName: "Miso ramen noodles", itemDescription: "Asian Cuisine" , quantity:"50", batchNum:'1'},
-    { src: "src/assets/images/pizza.png", itemName: "Pepperoni pizza", itemDescription: "Italian Cuisine" , quantity:"50", batchNum:'1'},
-    { src: "src/assets/images/ramen.png", itemName: "Tonkotsu ramen noodles", itemDescription: "Asian Cuisine" , quantity:"50", batchNum:'1'},
-    { src: "src/assets/images/pizza.png", itemName: "Margherita pizza", itemDescription: "Italian Cuisine" , quantity:"50", batchNum:'1'},
-    { src: "src/assets/images/vegetable.png", itemName: "Fresh salad", itemDescription: "Healthy Food" , quantity:"50", batchNum:'1'},
-    { src: "src/assets/images/ramen.png", itemName: "Tonkotsu ramen noodles", itemDescription: "Asian Cuisine" , quantity:"50", batchNum:'1'},
-    { src: "src/assets/images/pizza.png", itemName: "Margherita pizza", itemDescription: "Italian Cuisine", quantity:"50" , batchNum:'1'},
-    { src: "src/assets/images/vegetable.png", itemName: "Fresh salad", itemDescription: "Healthy Food" , quantity:"50", batchNum:'1'},
+
+
+    // { src: "src/assets/images/hamburger.png", itemName: "Delicious hamburger", itemDescription: "Fast Food" , quantity:"50", batchNum:'1'},
+    // { src: "src/assets/images/ramen.png", itemName: "Hot ramen noodles", itemDescription: "Asian Cuisine" , quantity:"50", batchNum:'1'},
+    // { src: "src/assets/images/pizza.png", itemName: "Cheesy pizza", itemDescription: "Italian Cuisine" , quantity:"50", batchNum:'1'},
+    // { src: "src/assets/images/vegetable.png", itemName: "Fresh vegetables", itemDescription: "Healthy Food", quantity:"50", batchNum:'1' },
+    // { src: "src/assets/images/ramen.png", itemName: "Spicy ramen noodles", itemDescription: "Asian Cuisine" , quantity:"50", batchNum:'1'},
+    // { src: "src/assets/images/pizza.png", itemName: "Vegetarian pizza", itemDescription: "Italian Cuisine", quantity:"50" , batchNum:'1'},
+    // { src: "src/assets/images/vegetable.png", itemName: "Organic vegetables", itemDescription: "Healthy Food" , quantity:"50", batchNum:'1'},
+    // { src: "src/assets/images/ramen.png", itemName: "Miso ramen noodles", itemDescription: "Asian Cuisine" , quantity:"50", batchNum:'1'},
+    // { src: "src/assets/images/pizza.png", itemName: "Pepperoni pizza", itemDescription: "Italian Cuisine" , quantity:"50", batchNum:'1'},
+    // { src: "src/assets/images/ramen.png", itemName: "Tonkotsu ramen noodles", itemDescription: "Asian Cuisine" , quantity:"50", batchNum:'1'},
+    // { src: "src/assets/images/pizza.png", itemName: "Margherita pizza", itemDescription: "Italian Cuisine" , quantity:"50", batchNum:'1'},
+    // { src: "src/assets/images/vegetable.png", itemName: "Fresh salad", itemDescription: "Healthy Food" , quantity:"50", batchNum:'1'},
+    // { src: "src/assets/images/ramen.png", itemName: "Tonkotsu ramen noodles", itemDescription: "Asian Cuisine" , quantity:"50", batchNum:'1'},
+    // { src: "src/assets/images/pizza.png", itemName: "Margherita pizza", itemDescription: "Italian Cuisine", quantity:"50" , batchNum:'1'},
+    // { src: "src/assets/images/vegetable.png", itemName: "Fresh salad", itemDescription: "Healthy Food" , quantity:"50", batchNum:'1'},
   ]);
+
+
 
   const [showModal, setShowModal] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);

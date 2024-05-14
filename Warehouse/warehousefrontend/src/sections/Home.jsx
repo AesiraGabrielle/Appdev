@@ -7,8 +7,6 @@ import Sidebar from '../assets/sidenavs/Sidebar';
 import BatchIn from '../assets/sidenavs/BatchIn'; 
 import BatchOut from '../assets/sidenavs/BatchOut'; 
 
-
-
 const Home = () => {
   const [showBatchInModal, setShowBatchInModal] = useState(false);
   const [showBatchOutModal, setShowBatchOutModal] = useState(false);
@@ -43,8 +41,12 @@ const Home = () => {
   const handleHideBatchOutModal = () => setShowBatchOutModal(false);
 
   const addToDataTable = (newData) => {
-    setDataTableData([...dataTableData, { ...newData, type: modalType }]);
+    // Calculate the next itemNum based on the maximum itemNum in the current data table
+    const nextItemNum = Math.max(...dataTableData.map(item => item.itemNum), 0) + 1;
+    // Add the new data with the calculated itemNum
+    setDataTableData([...dataTableData, { ...newData, itemNum: nextItemNum, type: modalType }]);
   };
+
   const columns = [
     {
       name: 'Item No.',
@@ -94,7 +96,6 @@ const Home = () => {
     )
   );
 
-
   return (
     <div className="container-fluid-home">
       <div className="row">
@@ -108,7 +109,7 @@ const Home = () => {
             <Card.Body style={{ padding: '2rem', margin: 0 }}>
               <DataTable
                 columns={columns}
-                data={dataTableData}
+                data={filteredData}
                 pagination
                 highlightOnHover
                 responsive
@@ -141,9 +142,9 @@ const Home = () => {
             </Card.Body>
           </Card>
           <div className="buttons-container2" style={{ bottom: '-10px' }}>
-        <button onClick={handleShowBatchInModal}>Batch In</button>
-        <button onClick={handleShowBatchOutModal}>Batch Out</button>
-      </div>
+            <button onClick={handleShowBatchInModal}>Batch In</button>
+            <button onClick={handleShowBatchOutModal}>Batch Out</button>
+          </div>
         </div>
       </div>
       <BatchIn showModal={showBatchInModal} handleCloseModal={handleHideBatchInModal} addToDataTable={addToDataTable} />

@@ -25,6 +25,10 @@ const AdminSidebar = () => {
   const redirectToEmployeePage = () => {
     navigate('/employees');}
 
+  const handleLogout = () => {
+    navigate('/adminlogin');
+  };
+
   return (
     <div className="sidebar-header">
       <ul>
@@ -34,7 +38,10 @@ const AdminSidebar = () => {
         <a href="#adminreturned" onClick={redirectToAdminReturnedPage}>Returned</a>
         <a href="#employees" onClick={redirectToEmployeePage}>Employees</a>
         <a href="#admincontacts" onClick={redirectToAdminContactsPage}>WIS Contacts</a>
+        <a href="#logout" onClick={handleLogout}>Logout</a>
+
       </ul>
+
     </div>
   );
 };
