@@ -273,6 +273,13 @@ div.content {
     background-color: #426ec8;
     }
 
+[data-column-id="control"].rdt_TableCol {
+    color: black;
+    font-size: 20px;
+    font-weight: 600;
+    background-color: #426ec8;
+    }
+
 .data-card{
     margin-top: 30px;
     margin-bottom: 50px;
@@ -434,4 +441,15 @@ div.content {
   .upload-wrapper {
     margin-top: 10px;
   }
+  
+
+  .tab {
+    padding: 10px;
+    cursor: pointer;
+  }
+  
+  .active-pane {
+    border-bottom: 2px solid #426ec8; /* Change the color as needed */
+  }
+  
   

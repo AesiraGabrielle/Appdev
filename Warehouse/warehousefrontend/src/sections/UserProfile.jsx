@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import '../assets/styles.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Navbar from '../assets/sidenavs/Navbar';
@@ -7,12 +8,47 @@ import { Modal, Button } from 'react-bootstrap';
 
 const UserProfile = () => {
   const [showModal, setShowModal] = useState(false);
-  const [name, setName] = useState('Sequito, Alex Gabrielle Marri A.');
-  const [employeeID, setEmployeeID] = useState('2100916');
-  const [birthdate, setBirthdate] = useState('12-13-2002');
-  const [email, setEmail] = useState('gabby@gab.com');
-  const [phoneNumber, setPhoneNumber] = useState('+639515826846');
-  const [image, setImage] = useState('src\\assets\\images\\user.png'); // Default image path
+  const [name, setName] = useState('');
+  const [employeeID, setEmployeeID] = useState('');
+  const [birthdate, setBirthdate] = useState('');
+  const [email, setEmail] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
+  const [image, setImage] = useState(''); // Default image path
+
+  useEffect(() => {
+    fetchUser();
+  }, []);
+
+  const fetchUser = () => {
+    const cookieString = document.cookie;
+    if (cookieString) {
+      const tokenCookie = cookieString.split('; ').find(row => row.startsWith('token='));
+      if (tokenCookie) {
+        const token = tokenCookie.split('=')[1];
+        axios.get('http://localhost:8000/api/auth/show', {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        })
+          .then(response => {
+            setName(response.data.user.first_name);
+            setEmployeeID(response.data.user.employee_id);
+            setBirthdate(response.data.user.birthday);
+            setEmail(response.data.user.email);
+            setImage('http://localhost:8000' + response.data.user.profile_picture);
+          })
+          .catch(error => {
+            const now = new Date();
+            document.cookie = `token=; expires=${new Date(now.getTime() - 1000).toUTCString()}; path=/`;
+            console.error('Error fetching events:', error);
+          });
+      } else {
+        console.error('Token cookie not found.');
+      }
+    } else {
+      console.error('No cookies found.');
+    }
+  }
 
   const handleEditProfile = () => {
     setShowModal(true);
@@ -48,8 +84,8 @@ const UserProfile = () => {
         </div>
         <div className="col-md-8 d-flex align-items-center justify-content-center">
           <Navbar className="sticky-top" />
-          <div className="card h-1000 card-custom">
-            <div className="card-body">
+          <div className="card h-1500 card-custom" style={{marginTop:'250px'}}>
+            <div className="card-body" style={{margin:'50px'}}>
               <div className="row align-items-center">
                 <div className="col-md-9">
                   <p className="mt-0 mb-1"><strong>Name:</strong> {name}</p>
@@ -62,9 +98,7 @@ const UserProfile = () => {
                   <p className="card-text">
                     <strong>Email:</strong> {email}
                   </p>
-                  <p className="card-text">
-                    <strong>Phone Number:</strong> {phoneNumber}
-                  </p>
+                  
                   <button className="btn btn-primary mt-3" onClick={handleEditProfile}>Edit Profile</button>
                 </div>
                 <div className="col-md-3 text-right">
@@ -105,21 +139,20 @@ const UserProfile = () => {
               </div>
             </div>
             <div className="col-md-3">
-  <img src={image} alt="profile" className="Userprof" style={{ maxWidth: '100%', height: 'auto' }} />
-  <div className="upload-wrapper" style={{ textAlign: 'center' }}>
-    <label htmlFor="upload" className="custom-file-upload">
-      Upload Image
-    </label>
-    <input
-      id="upload"
-      type="file"
-      accept="image/*"
-      onChange={handleImageUpload}
-      style={{ display: 'none' }}
-    />
-  </div>
-</div>
-
+              <img src={image} alt="profile" className="Userprof" style={{ maxWidth: '100%', height: 'auto' }} />
+              <div className="upload-wrapper" style={{ textAlign: 'center' }}>
+                <label htmlFor="upload" className="custom-file-upload">
+                  Upload Image
+                </label>
+                <input
+                  id="upload"
+                  type="file"
+                  accept="image/*"
+                  onChange={handleImageUpload}
+                  style={{ display: 'none' }}
+                />
+              </div>
+            </div>
           </div>
         </Modal.Body>
         <Modal.Footer>

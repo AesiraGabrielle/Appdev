@@ -6,8 +6,8 @@ import 'bootstrap/dist/css/bootstrap.min.css'; // Import Bootstrap CSS
 const AdminNavbar = ({ searchQuery, setSearchQuery }) => {
   const navigate = useNavigate();
 
-  const redirectToUserProfilePage = () => {
-    navigate('/userprofile');
+  const redirectToAdminProfilePage = () => {
+    navigate('/adminprofile');
   };
 
   const handleSearchInputChange = (e) => {
@@ -44,7 +44,7 @@ const AdminNavbar = ({ searchQuery, setSearchQuery }) => {
             </form>
           </div>
           <div className="col-auto">
-            <img src="src\assets\images\user.png" alt="user" className="user" onClick={redirectToUserProfilePage} />
+            <img src="src\assets\images\user.png" alt="user" className="user" onClick={redirectToAdminProfilePage} />
           </div>
         </div>
       </div>

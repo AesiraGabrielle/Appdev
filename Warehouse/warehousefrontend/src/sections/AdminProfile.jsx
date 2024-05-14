@@ -47,8 +47,8 @@ const AdminProfile = () => {
         </div>
         <div className="col-md-8 d-flex align-items-center justify-content-center">
           <AdminNavbar className="sticky-top" />
-          <div className="card h-1000 card-custom">
-            <div className="card-body">
+          <div className="card h-1500 card-custom" style={{marginTop:'250px'}}>
+            <div className="card-body" style={{margin:'50px'}}>
               <div className="row align-items-center">
                 <div className="col-md-9">
                   <p className="mt-0 mb-1"><strong>Name:</strong> {name}</p>
